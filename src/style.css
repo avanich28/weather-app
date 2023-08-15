@@ -1,0 +1,504 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css');
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@700&display=swap');
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+:root {
+  --padding: 20px;
+  --background-color: white;
+  --font-color: rgb(41, 40, 40);
+  --background-weather-today: #90c3d6;
+  --background-color-btn-hover: rgb(247, 211, 102);
+  --color-hover-github: #a52a2a;
+  --background-color-weather-forecast: rgb(35, 54, 69);
+  --font-color-light: white;
+  --background-color-forecast-container: rgba(63, 74, 78, 0.417);
+  --color-dot: rgb(52, 224, 230);
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(inherit);
+    opacity: 1;
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(inherit);
+    opacity: 1;
+  }
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(inherit);
+    opacity: 1;
+  }
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--font-color);
+  padding: var(--padding);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+  gap: 20px;
+}
+
+img {
+  height: 100%;
+}
+
+.logo {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  font-family: 'Grandstander', cursive;
+  font-size: 2rem;
+  animation: moveRight 2s forwards;
+}
+
+span {
+  color: rgb(12, 121, 12);
+}
+
+.weathercock {
+  width: 80px;
+}
+
+.weather-detail {
+  grid-area: main;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 'section-1 section-2';
+}
+
+.weather-today {
+  grid-area: section-1;
+  padding: var(--padding);
+  background-color: var(--background-weather-today);
+  /* top-left | top-right | bottom-right | bottom-left */
+  border-radius: 25px 0 0 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+  animation: moveRight 2s forwards;
+}
+
+.search-location,
+.other-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+form {
+  display: flex;
+}
+
+input[type='text'],
+.search-btn {
+  background-color: var(--background-color);
+}
+
+input[type='text'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 5px 7px;
+  border-radius: 20px 0 0 20px;
+  border: none;
+}
+
+input[type='text']:focus {
+  outline: 3px solid var(--background-color-btn-hover);
+}
+
+.search-btn {
+  border: none;
+  border-radius: 0 20px 20px 0;
+  padding-right: 10px;
+  background-color: var(--background-color-btn-hover);
+  transition: all 0.3s ease-in-out;
+}
+
+.search-btn:hover {
+  transform: scale(1.05);
+}
+
+.search-btn:active {
+  transform: scale(1);
+}
+
+.date-time {
+  font-size: 0.9rem;
+}
+
+.temperature-type-btn {
+  border: none;
+  background-color: var(--background-color);
+  padding: 5px 13px;
+  border-radius: 15px;
+  font-size: 1.05rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.temperature-type-btn:hover {
+  background-color: var(--background-color-btn-hover);
+  transform: scale(1.03);
+}
+
+.temperature-type-btn:active {
+  transform: scale(0.95);
+}
+
+.temperature-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.temperature-detail > div:nth-of-type(1) {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.temperature {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 1.2rem;
+}
+
+.highest-lowest-temperature {
+  display: flex;
+  gap: 13px;
+  font-size: 0.9rem;
+}
+
+.other-details > div {
+  padding-right: 7px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  min-width: max-content;
+}
+
+.other-details > div > img {
+  width: 30px;
+}
+
+.other-details > div p:nth-of-type(1) {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.bi-geo-alt-fill {
+  color: var(--font-color-light);
+}
+
+.weather-forecast {
+  grid-area: section-2;
+  background-color: var(--background-color-weather-forecast);
+  border-radius: 0 25px 25px 0;
+  color: var(--font-color-light);
+  padding: var(--padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  animation: moveDown 2s forwards;
+}
+
+.weather-forecast > div > h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hourly-container,
+.daily-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--background-color-forecast-container);
+  border-radius: 20px;
+  padding: 13px 0;
+}
+
+.hourly-container > button,
+.daily-container > button {
+  font-size: 2rem;
+  border: none;
+  background-color: transparent;
+  padding: none;
+  color: var(--font-color-light);
+  transition: all 0.3s ease-in-out;
+}
+
+.hourly-container > button:hover,
+.daily-container > button:hover {
+  transform: scale(1.2);
+  color: var(--background-color-btn-hover);
+}
+
+.hourly-container > button:active,
+.daily-container > button:active {
+  transform: scale(1);
+}
+
+/* here */
+.weather-hourly-list,
+.weather-daily-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hourly-item,
+.daily-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.forecast-image > iframe {
+  height: 60px;
+  width: 60px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+}
+
+.dots > button {
+  padding: 0;
+  color: var(--font-color-light);
+  background-color: transparent;
+  border: 0;
+  height: 20px;
+  width: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.dots > button:hover {
+  color: var(--color-dot);
+}
+
+.bi-dot {
+  position: relative;
+  top: -10px;
+  left: -7px;
+  padding: 0;
+  font-size: 30px;
+}
+
+.copyright {
+  grid-area: footer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  animation: moveUp 2s forwards;
+}
+
+.bi-github {
+  font-size: 40px;
+}
+
+.copyright > a {
+  color: var(--font-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.copyright > a:hover {
+  color: var(--color-hover-github);
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 20px 0;
+  }
+
+  .weather-detail {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas:
+      'section-1'
+      'section-2';
+    padding: 0;
+  }
+
+  .weather-today,
+  .weather-forecast {
+    border-radius: 0;
+  }
+
+  .logo,
+  .weather-today {
+    animation: moveDown 2s forwards;
+  }
+
+  .weather-forecast {
+    animation: moveUp 2s forwards;
+  }
+}

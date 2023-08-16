@@ -1,17 +1,18 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   entry: {
-    bundle: "./src/index.js",
+    bundle: './src/index.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Weather App",
-      filename: "index.html",
-      template: "./src/template.html",
+      title: 'Weather App',
+      filename: 'index.html',
+      template: './src/template.html',
+      favicon: './src/imgs/favicon.ico',
+      inject: 'body',
       minify: {
         collapseWhitespace: true,
         keepClosingSlash: true,
@@ -25,30 +26,34 @@ module.exports = {
     new BundleAnalyzerPlugin(),
   ],
   output: {
-    filename: "[name][contenthash].js",
-    path: path.resolve(__dirname, "dist"),
+    filename: '[name][contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
     clean: true,
-    assetModuleFilename: "[name][ext]",
+    assetModuleFilename: '[name][ext]',
   },
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env"],
+            presets: ['@babel/preset-env'],
           },
         },
+      },
+      {
+        test: /\.ico$/i,
+        loader: 'asset/resource',
       },
     ],
   },

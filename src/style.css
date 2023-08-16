@@ -209,7 +209,7 @@ img {
 }
 
 span {
-  color: rgb(12, 121, 12);
+  color: rgb(241, 187, 22);
 }
 
 .weathercock {
@@ -233,7 +233,7 @@ span {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 30px;
+  gap: 27px;
   animation: moveRight 2s forwards;
 }
 
@@ -244,6 +244,13 @@ span {
 }
 
 form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+form > div:nth-of-type(1) {
   display: flex;
 }
 
@@ -281,11 +288,17 @@ input[type='text']:focus {
   transform: scale(1);
 }
 
+.error {
+  font-size: 0.8rem;
+  color: red;
+}
+
 .date-time {
   font-size: 0.9rem;
 }
 
 .temperature-type-btn {
+  align-self: center;
   border: none;
   background-color: var(--background-color);
   padding: 5px 13px;
@@ -407,8 +420,10 @@ input[type='text']:focus {
 /* here */
 .weather-hourly-list,
 .weather-daily-list {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  gap: 5px;
 }
 
 .hourly-item,
@@ -477,6 +492,10 @@ input[type='text']:focus {
 @media only screen and (max-width: 600px) {
   body {
     padding: 20px 0;
+  }
+
+  .logo {
+    justify-content: center;
   }
 
   .weather-detail {

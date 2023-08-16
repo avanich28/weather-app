@@ -8,7 +8,7 @@
   <body>
     <header class="logo">
       <img
-        src="../src/imgs/weathercock.svg"
+        src="<%=require('./imgs/weathercock.svg')%>"
         alt="weathercock"
         class="weathercock"
       />
@@ -17,15 +17,18 @@
     <main class="weather-detail">
       <section class="weather-today">
         <header class="search-location">
-          <form action="#">
-            <label for="location"> </label
-            ><input
-              type="text"
-              name="location"
-              id="location"
-              placeholder="Enter your location..."
-            />
-            <button class="search-btn"><i class="bi bi-search"></i></button>
+          <form class="location-form" action="#">
+            <div>
+              <label for="location"> </label
+              ><input
+                type="text"
+                name="location"
+                id="location"
+                placeholder="Enter your location..."
+              />
+              <button class="search-btn"><i class="bi bi-search"></i></button>
+            </div>
+            <div class="error"></div>
           </form>
           <button class="temperature-type-btn">&deg;C | &deg;F</button>
         </header>
@@ -35,7 +38,10 @@
             <h2 class="location-name">Germany</h2>
           </div>
           <p class="date-time">Tuesday 15 August 2023 | 9:06</p>
-          <iframe src="../src/imgs/g_1_stormy.svg" frameborder="0"></iframe>
+          <iframe
+            src="<%=require('./imgs/g_1_stormy.svg')%>"
+            frameborder="0"
+          ></iframe>
           <h3 class="temperature">58&deg;C</h3>
           <p class="description">Sunny</p>
           <div class="highest-lowest-temperature">
@@ -45,28 +51,31 @@
         </main>
         <footer class="other-details">
           <div class="humidity">
-            <img src="../src/imgs/humidity.svg" alt="humidity" />
+            <img src="<%=require('./imgs/humidity.svg')%>" alt="humidity" />
             <div>
               <p>91%</p>
               <p>Humidity</p>
             </div>
           </div>
           <div class="wind-speed">
-            <img src="../src/imgs/wind.svg" alt="wind" />
+            <img src="<%=require('./imgs/wind.svg')%>" alt="wind" />
             <div>
               <p>sw 3 km/h</p>
               <p>Wind Speed</p>
             </div>
           </div>
           <div class="chance-of-rain">
-            <img src="../src/imgs/rain.svg" alt="rain" />
+            <img src="<%=require('./imgs/rain.svg')%>" alt="rain" />
             <div>
               <p>10%</p>
               <p>Chance of Rain</p>
             </div>
           </div>
           <div class="feel-like">
-            <img src="../src/imgs/thermometer.svg" alt="thermometer" />
+            <img
+              src="<%=require('./imgs/thermometer.svg')%>"
+              alt="thermometer"
+            />
             <div>
               <p>40&deg;C</p>
               <p>Feel Like</p>
@@ -84,7 +93,7 @@
                 <p>Now</p>
                 <div class="forecast-image">
                   <iframe
-                    src="../src/imgs/g_3_snowflake.svg"
+                    src="<%=require('./imgs/g_3_snowflake.svg')%>"
                     frameborder="0"
                   ></iframe>
                 </div>
@@ -106,7 +115,37 @@
                 <p>Wednesday</p>
                 <div class="forecast-image">
                   <iframe
-                    src="../src/imgs/c_3_thunderstorm.svg"
+                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
+                    frameborder="0"
+                  ></iframe>
+                </div>
+                <p>30&deg;C</p>
+              </li>
+              <li class="daily-item">
+                <p>Wednesday</p>
+                <div class="forecast-image">
+                  <iframe
+                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
+                    frameborder="0"
+                  ></iframe>
+                </div>
+                <p>30&deg;C</p>
+              </li>
+              <li class="daily-item">
+                <p>Wednesday</p>
+                <div class="forecast-image">
+                  <iframe
+                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
+                    frameborder="0"
+                  ></iframe>
+                </div>
+                <p>30&deg;C</p>
+              </li>
+              <li class="daily-item">
+                <p>Wednesday</p>
+                <div class="forecast-image">
+                  <iframe
+                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
                     frameborder="0"
                   ></iframe>
                 </div>

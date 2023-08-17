@@ -1,9 +1,9 @@
+import { RES_PER_PAGE } from './config.js';
 import { getJSON } from './helpers.js';
 
 export const state = {
   search: {
     query: '',
-    coord: {},
     curWeather: {},
   },
   hourlyForecast: {
@@ -14,21 +14,115 @@ export const state = {
     results: [],
     page: 1,
   },
-  resultsPerPage: 4,
+  type: 0, // 0 = celcius, 1 = fahrenheit
+  resultsPerPage: RES_PER_PAGE,
+};
+
+const convertDateAndTime = function (date) {
+  const options = {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
+  return new Intl.DateTimeFormat('en-GB', options)
+    .format(date)
+    .replace('at', '|');
+};
+
+const getHourNum = function (date) {
+  return new Date(date).getHours();
+};
+
+const createCurWeatherObj = function (data) {
+  const { current, forecast, location } = data;
+  const forecastDay = forecast.forecastday[0];
+
+  return {
+    city: location.name,
+    country: location.country,
+    localTime: convertDateAndTime(new Date(location.localtime)),
+    code: current.condition.code,
+    isDay: current.is_day,
+    temp: current.temp_c,
+    description: current.condition.text,
+    maxTemp: forecastDay.day.maxtemp_c,
+    minTemp: forecastDay.day.mintemp_c,
+    humidity: current.humidity,
+    windSpeed: current.wind_kph,
+    chanceOfRain:
+      forecast.chance_of_rain.hour[getHourNum(location.localtime)]
+        .chance_of_rain,
+    feelsLike: current.feelsLike_c,
+  };
+};
+
+const createHourlyObj = function (hourData) {
+  const hourNum = getHourNum(hourData.time);
+  return {
+    hour: hourNum === new Date().getHours() ? 'Now' : hourNum,
+    temp: hourData.temp_c,
+    code: hourData.condition.code,
+    isDay: hourData.is_day,
+  };
+};
+
+const createDailyObj = function (dayData) {
+  return {
+    day: convertDateAndTime(new Date(dayData.date))
+      .split(' ')[0]
+      .replace(',', ''),
+    temp: dayData.day.avgtemp_c,
+    code: dayData.day.condition.code,
+    isDay: 1,
+  };
+};
+
+const storeHourlyForecast = function (data) {
+  const { forecast, location } = data;
+  // Use only 2 days
+  const days = forecast.forecastday.slice(0, 2);
+
+  // Store only 24 hours
+  const index = getHourNum(location.localtime);
+  const hours = days[0].hours
+    .slice(index)
+    .concat(days[1].hours.slice(0, index));
+
+  // Clear
+  state.hourlyForecast.results = [];
+
+  hours.forEach(hour => {
+    const obj = createHourlyObj(hour);
+    state.hourlyForecast.results.push(obj);
+  });
+};
+
+const storeDailyForecast = function (data) {
+  const { forecast } = data;
+  // API is free only 2 days
+  const days = forecast.forecastday.slice(1);
+
+  // Clear
+  state.dailyForecast.results = [];
+
+  days.forEach(day => {
+    const obj = createDailyObj(day);
+    state.dailyForecast.results.push(obj);
+  });
 };
 
 export const loadCurWeather = async function () {
   try {
-    const coord = await getJSON(
-      `https://geocode.xyz/${state.search.query}?json=1&auth=119992969915497e15787373x101695`
-    );
-
-    console.log(coord);
-
     const data = await getJSON(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${coord.latt}&lon=${coord.longt}&appid=5b21c1a8d8f5a47a6ac39eb7b55ce1fa`
+      `http://api.weatherapi.com/v1/forecast.json?key=0339d3d557a3447590e140611231208&q=${state.search.query}&days=3`
     );
-    console.log(data);
+
+    state.curWeather = createCurWeatherObj(data);
+    storeHourlyForecast(data);
+    storeDailyForecast(data);
   } catch (err) {
     throw err;
   }

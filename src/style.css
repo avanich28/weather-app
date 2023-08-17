@@ -398,7 +398,7 @@ input[type='text']:focus {
 
 .hourly-container > button,
 .daily-container > button {
-  font-size: 2rem;
+  font-size: 1.3rem;
   border: none;
   background-color: transparent;
   padding: none;
@@ -432,6 +432,10 @@ input[type='text']:focus {
   flex-direction: column;
   align-items: center;
   gap: 5px;
+}
+
+p.bold {
+  font-weight: bold;
 }
 
 .forecast-image > iframe {

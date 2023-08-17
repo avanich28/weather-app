@@ -30,7 +30,9 @@
             </div>
             <div class="error"></div>
           </form>
-          <button class="temperature-type-btn">&deg;C | &deg;F</button>
+          <button class="temperature-type-btn" data-type="0">
+            &deg;C | &deg;F
+          </button>
         </header>
         <main class="temperature-detail">
           <div>
@@ -39,7 +41,7 @@
           </div>
           <p class="date-time">Tuesday 15 August 2023 | 9:06</p>
           <iframe
-            src="<%=require('./imgs/g_1_stormy.svg')%>"
+            src="<%=require('./imgs/1222_0.svg')%>"
             frameborder="0"
           ></iframe>
           <h3 class="temperature">58&deg;C</h3>
@@ -60,7 +62,7 @@
           <div class="wind-speed">
             <img src="<%=require('./imgs/wind.svg')%>" alt="wind" />
             <div>
-              <p>sw 3 km/h</p>
+              <p>3 km/h</p>
               <p>Wind Speed</p>
             </div>
           </div>
@@ -78,7 +80,7 @@
             />
             <div>
               <p>40&deg;C</p>
-              <p>Feel Like</p>
+              <p>Feels Like</p>
             </div>
           </div>
         </footer>
@@ -89,11 +91,11 @@
           <div class="hourly-container">
             <button><i class="bi bi-caret-left-fill"></i></button>
             <ul class="weather-hourly-list">
-              <li class="hourly-item">
-                <p>Now</p>
+              <li class="hourly-item" data-index="0">
+                <p class="bold">Now</p>
                 <div class="forecast-image">
                   <iframe
-                    src="<%=require('./imgs/g_3_snowflake.svg')%>"
+                    src="<%=require('./imgs/1003_0.svg')%>"
                     frameborder="0"
                   ></iframe>
                 </div>
@@ -111,11 +113,11 @@
           <div class="daily-container">
             <button><i class="bi bi-caret-left-fill"></i></button>
             <ul class="weather-daily-list">
-              <li class="daily-item">
+              <li class="daily-item" data-index="0">
                 <p>Wednesday</p>
                 <div class="forecast-image">
                   <iframe
-                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
+                    src="<%=require('./imgs/1006_1.svg')%>"
                     frameborder="0"
                   ></iframe>
                 </div>
@@ -125,7 +127,7 @@
                 <p>Wednesday</p>
                 <div class="forecast-image">
                   <iframe
-                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
+                    src="<%=require('./imgs/1006_1.svg')%>"
                     frameborder="0"
                   ></iframe>
                 </div>
@@ -135,7 +137,7 @@
                 <p>Wednesday</p>
                 <div class="forecast-image">
                   <iframe
-                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
+                    src="<%=require('./imgs/1006_1.svg')%>"
                     frameborder="0"
                   ></iframe>
                 </div>
@@ -145,7 +147,7 @@
                 <p>Wednesday</p>
                 <div class="forecast-image">
                   <iframe
-                    src="<%=require('./imgs/c_3_thunderstorm.svg')%>"
+                    src="<%=require('./imgs/1006_1.svg')%>"
                     frameborder="0"
                   ></iframe>
                 </div>

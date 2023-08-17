@@ -9,6 +9,7 @@ class SearchView extends View {
       e.preventDefault();
       const dataEntries = [...new FormData(this._form)];
       const query = Object.fromEntries(dataEntries).location;
+      if (!query) return;
       this._clearInput();
       handler(query);
     });

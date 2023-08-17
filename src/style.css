@@ -269,7 +269,7 @@ input[type='text'] {
 }
 
 input[type='text']:focus {
-  outline: 3px solid var(--background-color-btn-hover);
+  outline: 2px solid var(--background-color-btn-hover);
 }
 
 .search-btn {
@@ -277,11 +277,10 @@ input[type='text']:focus {
   border-radius: 0 20px 20px 0;
   padding-right: 10px;
   background-color: var(--background-color-btn-hover);
-  transition: all 0.3s ease-in-out;
 }
 
-.search-btn:hover {
-  transform: scale(1.05);
+input[type='text']:focus + .search-btn {
+  outline: 2px solid var(--background-color-btn-hover);
 }
 
 .search-btn:active {
@@ -303,17 +302,16 @@ input[type='text']:focus {
   background-color: var(--background-color);
   padding: 5px 13px;
   border-radius: 15px;
-  font-size: 1.05rem;
   transition: all 0.3s ease-in-out;
 }
 
 .temperature-type-btn:hover {
   background-color: var(--background-color-btn-hover);
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .temperature-type-btn:active {
-  transform: scale(0.95);
+  transform: scale(1);
 }
 
 .temperature-detail {

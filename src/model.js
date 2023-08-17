@@ -13,7 +13,7 @@ export const state = {
   dailyForecast: {
     results: [],
   },
-  type: 0, // 0 = celcius, 1 = fahrenheit
+  type: 0, // 0 = celsius, 1 = fahrenheit
   resultsPerPage: RES_PER_PAGE,
 };
 
@@ -57,10 +57,10 @@ const createCurWeatherObj = function (data) {
   };
 };
 
-const createHourlyObj = function (hourData) {
+const createHourlyObj = function (hourData, curHour) {
   const hourNum = getHourNum(hourData.time);
   return {
-    hour: hourNum === new Date().getHours() ? 'Now' : hourNum,
+    hour: hourNum === curHour ? 'Now' : hourNum,
     temp: hourData.temp_c,
     code: hourData.condition.code,
     isDay: hourData.is_day,
@@ -91,7 +91,7 @@ const storeHourlyForecast = function (data) {
   state.hourlyForecast.results = [];
 
   hours.forEach(hour => {
-    const obj = createHourlyObj(hour);
+    const obj = createHourlyObj(hour, index);
     state.hourlyForecast.results.push(obj);
   });
 };

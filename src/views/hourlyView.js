@@ -13,9 +13,7 @@ class HourlyView extends View {
     }</p>
         <div class="forecast-image">
           <iframe
-            src="<%=require('./imgs/${this._data.code}_${
-      this._data.isDay
-    }.svg')%>"
+            src="${this._findImage()}"
             frameborder="0"
           ></iframe>
         </div>

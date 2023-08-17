@@ -422,8 +422,16 @@ input[type='text']:focus {
 .weather-daily-list {
   width: 100%;
   display: flex;
+}
+
+.weather-hourly-list {
   justify-content: space-between;
   gap: 5px;
+}
+
+.weather-daily-list {
+  justify-content: center;
+  gap: 50px;
 }
 
 .hourly-item,

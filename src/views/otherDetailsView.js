@@ -6,21 +6,21 @@ class OtherDetailsView extends View {
   _generateMarkUp() {
     return `
       <div class="humidity">
-        <img src="<%=require('./imgs/humidity.svg')%>" alt="humidity" />
+        <img src="${this._findImage(false, 'humidity')}" alt="humidity" />
         <div>
           <p>${this._data.humidity}%</p>
           <p>Humidity</p>
         </div>
       </div>
       <div class="wind-speed">
-        <img src="<%=require('./imgs/wind.svg')%>" alt="wind" />
+        <img src="${this._findImage(false, 'wind')}" alt="wind" />
         <div>
           <p>${this._data.windSpeed} km/h</p>
           <p>Wind Speed</p>
         </div>
       </div>
       <div class="chance-of-rain">
-        <img src="<%=require('./imgs/rain.svg')%>" alt="rain" />
+        <img src="${this._findImage(false, 'rain')}" alt="rain" />
         <div>
           <p>${this._data.chanceOfRain}%</p>
           <p>Chance of Rain</p>
@@ -28,7 +28,7 @@ class OtherDetailsView extends View {
       </div>
       <div class="feel-like">
         <img
-          src="<%=require('./imgs/thermometer.svg')%>"
+          src="${this._findImage(false, 'thermometer')}"
           alt="thermometer"
         />
         <div>

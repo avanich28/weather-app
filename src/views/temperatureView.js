@@ -11,7 +11,7 @@ class TemperatureView extends View {
     </div>
     <p class="date-time">${this._data.localTime}</p>
     <iframe
-      src="<%=require('./${this._data.code}_${this._data.isDay}.svg')%>"
+      src="${this._findImage()}"
       frameborder="0"
     ></iframe>
     <h3 class="temperature">${this._data.temp}&deg;C</h3>

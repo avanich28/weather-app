@@ -14,6 +14,8 @@ class SearchView extends View {
     });
   }
 
+  errorMsg() {} // FIXME
+
   _clearInput() {
     this._form.querySelector('input').value = '';
   }

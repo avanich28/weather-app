@@ -12,7 +12,6 @@ export const state = {
   },
   dailyForecast: {
     results: [],
-    page: 1,
   },
   type: 0, // 0 = celcius, 1 = fahrenheit
   resultsPerPage: RES_PER_PAGE,
@@ -29,7 +28,7 @@ const convertDateAndTime = function (date) {
   };
   return new Intl.DateTimeFormat('en-GB', options)
     .format(date)
-    .replace('at', '|');
+    .replace(' at ', ' | ');
 };
 
 const getHourNum = function (date) {
@@ -53,9 +52,8 @@ const createCurWeatherObj = function (data) {
     humidity: current.humidity,
     windSpeed: current.wind_kph,
     chanceOfRain:
-      forecast.chance_of_rain.hour[getHourNum(location.localtime)]
-        .chance_of_rain,
-    feelsLike: current.feelsLike_c,
+      forecastDay.hour[getHourNum(location.localtime)].chance_of_rain,
+    feelsLike: current.feelslike_c,
   };
 };
 
@@ -87,9 +85,7 @@ const storeHourlyForecast = function (data) {
 
   // Store only 24 hours
   const index = getHourNum(location.localtime);
-  const hours = days[0].hours
-    .slice(index)
-    .concat(days[1].hours.slice(0, index));
+  const hours = days[0].hour.slice(index).concat(days[1].hour.slice(0, index));
 
   // Clear
   state.hourlyForecast.results = [];
@@ -120,10 +116,21 @@ export const loadCurWeather = async function () {
       `http://api.weatherapi.com/v1/forecast.json?key=0339d3d557a3447590e140611231208&q=${state.search.query}&days=3`
     );
 
-    state.curWeather = createCurWeatherObj(data);
+    state.search.curWeather = createCurWeatherObj(data);
     storeHourlyForecast(data);
     storeDailyForecast(data);
+
+    state.hourlyForecast.page = 1;
   } catch (err) {
     throw err;
   }
+};
+
+export const getPageHourly = function (page = 1) {
+  state.hourlyForecast.page = page;
+
+  const start = state.resultsPerPage * (page - 1);
+  const end = page * state.resultsPerPage + 1;
+
+  return state.hourlyForecast.results.slice(start, end);
 };

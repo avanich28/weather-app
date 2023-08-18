@@ -5,9 +5,7 @@ class DailyView extends View {
 
   _generateMarkUp() {
     return `
-      <li class="daily-item" data-index="${
-        this._parentElement.children.length
-      }">
+      <li class="daily-item">
         <p>${this._data.day}</p>
         <div class="forecast-image">
           <iframe

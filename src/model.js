@@ -2,6 +2,7 @@ import { RES_PER_PAGE } from './config.js';
 import { getJSON } from './helpers.js';
 
 export const state = {
+  curPosition: '',
   search: {
     query: '',
     curWeather: {},
@@ -140,4 +141,29 @@ export const getPageHourly = function (page = 1) {
   const end = page * state.resultsPerPage;
 
   return state.hourlyForecast.results.slice(start, end);
+};
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    if (navigator.geolocation)
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+export const loadLocation = async function () {
+  try {
+    const position = await getPosition();
+    const { latitude, longitude } = position.coords;
+
+    console.log(`https://www.google.co.th/maps/@${latitude},${longitude}`); // FIXME
+
+    const data = await getJSON(
+      `https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=119992969915497e15787373x101695`
+    );
+
+    state.curPosition = data.city;
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 };

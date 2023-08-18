@@ -182,6 +182,15 @@ table {
   }
 }
 
+@keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 body {
   background-color: var(--background-color);
   color: var(--font-color);
@@ -225,6 +234,11 @@ img {
   grid-template-areas: 'section-1 section-2';
 }
 
+.weather-today,
+.weather-forecast {
+  height: 450px;
+}
+
 .weather-today {
   grid-area: section-1;
   padding: var(--padding);
@@ -236,6 +250,7 @@ img {
   justify-content: space-between;
   gap: 27px;
   animation: moveRight 2s forwards;
+  min-width: 467px;
 }
 
 .search-location,
@@ -382,6 +397,7 @@ input[type='text']:focus + .search-btn {
   justify-content: center;
   gap: 40px;
   animation: moveDown 2s forwards;
+  min-width: 390px;
 }
 
 .weather-forecast > div > h2 {
@@ -426,6 +442,8 @@ input[type='text']:focus + .search-btn {
 .weather-daily-list {
   width: 100%;
   display: flex;
+  align-items: center;
+  height: 110px;
 }
 
 .weather-hourly-list {
@@ -458,6 +476,7 @@ p.bold {
 .dots {
   display: flex;
   justify-content: center;
+  height: 20px;
 }
 
 .dots > button {
@@ -504,6 +523,16 @@ p.bold {
 
 .copyright > a:hover {
   color: var(--color-hover-github);
+}
+
+li,
+.temperature-detail > *,
+.other-details > * {
+  animation: showUp 2s forwards;
+}
+
+img {
+  animation: moveDown 4s forwards;
 }
 
 @media only screen and (max-width: 600px) {

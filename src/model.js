@@ -126,11 +126,18 @@ export const loadCurWeather = async function () {
   }
 };
 
+export const calcAllHourlyPages = function () {
+  return Math.ceil(state.hourlyForecast.results.length / state.resultsPerPage);
+};
+
 export const getPageHourly = function (page = 1) {
+  const allPages = calcAllHourlyPages();
+  if (page > allPages) page = 1;
+  if (page < 1) page = allPages;
   state.hourlyForecast.page = page;
 
   const start = state.resultsPerPage * (page - 1);
-  const end = page * state.resultsPerPage + 1;
+  const end = page * state.resultsPerPage;
 
   return state.hourlyForecast.results.slice(start, end);
 };

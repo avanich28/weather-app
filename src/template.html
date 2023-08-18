@@ -12,7 +12,7 @@
         alt="weathercock"
         class="weathercock"
       />
-      <h1>Weather A<span>pp</span></h1>
+      <h1>Weather A<span class="char">pp</span></h1>
     </header>
     <main class="weather-detail">
       <section class="weather-today">
@@ -31,7 +31,8 @@
             <div class="error"></div>
           </form>
           <button class="temperature-type-btn" data-type="0">
-            &deg;C | &deg;F
+            <span class="active-type">&deg;C</span> |
+            <span class="">&deg;F</span>
           </button>
         </header>
         <main class="temperature-detail">
@@ -89,7 +90,9 @@
         <div class="weather-hourly-forecast">
           <h2>Hourly Forecast</h2>
           <div class="hourly-container">
-            <button><i class="bi bi-caret-left-fill"></i></button>
+            <button class="arrow-btn-left">
+              <i class="bi bi-caret-left-fill"></i>
+            </button>
             <ul class="weather-hourly-list">
               <!-- <li class="hourly-item" data-index="0">
                 <p class="bold">Now</p>
@@ -102,10 +105,12 @@
                 <p>14&deg;C</p>
               </li> -->
             </ul>
-            <button><i class="bi bi-caret-right-fill"></i></button>
+            <button class="arrow-btn-right">
+              <i class="bi bi-caret-right-fill"></i>
+            </button>
           </div>
           <div class="dots">
-            <button><i class="bi bi-dot"></i></button>
+            <!-- <button><i class="bi bi-dot" data-index="0"></i></button> -->
           </div>
         </div>
         <div class="weather-daily-forecast">

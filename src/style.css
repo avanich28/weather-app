@@ -146,6 +146,7 @@ table {
   --font-color-light: white;
   --background-color-forecast-container: rgba(63, 74, 78, 0.417);
   --color-dot: rgb(52, 224, 230);
+  --color-active: rgb(13, 170, 42);
 }
 
 @keyframes moveRight {
@@ -208,7 +209,7 @@ img {
   animation: moveRight 2s forwards;
 }
 
-span {
+.char {
   color: rgb(241, 187, 22);
 }
 
@@ -312,6 +313,11 @@ input[type='text']:focus + .search-btn {
 
 .temperature-type-btn:active {
   transform: scale(1);
+}
+
+.active-type {
+  color: var(--color-active);
+  font-weight: bold;
 }
 
 .temperature-detail {
@@ -464,7 +470,8 @@ p.bold {
   transition: all 0.3s ease-in-out;
 }
 
-.dots > button:hover {
+.dots > button:hover,
+.active-dot {
   color: var(--color-dot);
 }
 

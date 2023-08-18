@@ -1,2 +1,2 @@
 export const TIMEOUT_SEC = 10;
-export const RES_PER_PAGE = 4;
+export const RES_PER_PAGE = 5;

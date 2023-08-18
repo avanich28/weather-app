@@ -38,6 +38,7 @@ const controlClickArrowLeft = function () {
   model
     .getPageHourly(--model.state.hourlyForecast.page)
     .forEach(data => hourlyView.render(data));
+  dotsView.switchDot(model.state.hourlyForecast.page);
 };
 
 const controlClickArrowRight = function () {
@@ -45,6 +46,7 @@ const controlClickArrowRight = function () {
   model
     .getPageHourly(++model.state.hourlyForecast.page)
     .forEach(data => hourlyView.render(data));
+  dotsView.switchDot(model.state.hourlyForecast.page);
 };
 
 const controlClickDot = function (index) {

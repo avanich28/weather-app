@@ -15,6 +15,11 @@ class DotsView extends View {
     });
   }
 
+  switchDot(page) {
+    const allDots = this._parentElement.querySelectorAll('.bi-dot');
+    this._activeDot(allDots[page - 1]);
+  }
+
   _activeDot(el) {
     this._parentElement
       .querySelectorAll('.bi-dot')

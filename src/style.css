@@ -146,7 +146,8 @@ table {
   --font-color-light: white;
   --background-color-forecast-container: rgba(63, 74, 78, 0.417);
   --color-dot: rgb(52, 224, 230);
-  --color-active: rgb(13, 170, 42);
+  --color-active: orangered;
+  --color-error: red;
 }
 
 @keyframes moveRight {
@@ -219,7 +220,7 @@ img {
 }
 
 .char {
-  color: rgb(241, 187, 22);
+  color: var(--color-hover-github);
 }
 
 .weathercock {
@@ -305,7 +306,7 @@ input[type='text']:focus + .search-btn {
 
 .error {
   font-size: 0.8rem;
-  color: red;
+  color: var(--color-error);
 }
 
 .date-time {
@@ -315,14 +316,15 @@ input[type='text']:focus + .search-btn {
 .temperature-type-btn {
   align-self: center;
   border: none;
-  background-color: var(--background-color);
+  background-color: var(--background-color-weather-forecast);
+  color: var(--font-color-light);
+  font-size: 1rem;
   padding: 5px 13px;
   border-radius: 15px;
   transition: all 0.3s ease-in-out;
 }
 
 .temperature-type-btn:hover {
-  background-color: var(--background-color-btn-hover);
   transform: scale(1.05);
 }
 
@@ -346,7 +348,8 @@ input[type='text']:focus + .search-btn {
   display: flex;
   gap: 5px;
   align-items: center;
-  font-size: 1.6rem;
+  text-align: center;
+  font-size: 1.4rem;
 }
 
 .temperature {
@@ -355,7 +358,7 @@ input[type='text']:focus + .search-btn {
 }
 
 .description {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .highest-lowest-temperature {
@@ -437,7 +440,6 @@ input[type='text']:focus + .search-btn {
   transform: scale(1);
 }
 
-/* here */
 .weather-hourly-list,
 .weather-daily-list {
   width: 100%;
@@ -448,12 +450,20 @@ input[type='text']:focus + .search-btn {
 
 .weather-hourly-list {
   justify-content: space-between;
-  gap: 5px;
 }
 
 .weather-daily-list {
   justify-content: center;
   gap: 50px;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+}
+
+.weather-hourly-list .spinner {
+  margin-left: 47%;
 }
 
 .hourly-item,

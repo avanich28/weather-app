@@ -9,6 +9,9 @@ import dotsView from './views/dotsView.js';
 import forecastsView from './views/forecastsView.js';
 
 const controlSearch = async function (query, firstLoad = false) {
+  // Loading
+  if (!firstLoad) [hourlyView, dailyView].forEach(el => el.renderSpinner());
+
   // Store query
   model.state.search.query = query;
 
@@ -25,20 +28,16 @@ const controlSearch = async function (query, firstLoad = false) {
       view.update(model.state.search.curWeather)
     );
 
-  // Clear forecast
-  [hourlyView, dailyView, dotsView].forEach(view => view.clear());
-
   // Render hourly & daily forecast & don't need index
   forecastsView.display(hourlyView, model.getPageHourly());
   forecastsView.display(dailyView, model.state.dailyForecast.results);
 
   // Render hourly dots & need index
-  for (let i = 0; i < model.calcAllHourlyPages(); i++) dotsView.render(true);
-  dotsView.resetDot();
+  forecastsView.display(dotsView, model.calcAllHourlyPages());
+  dotsView.reset();
 };
 
 const controlClickArrowLeft = function () {
-  hourlyView.clear();
   forecastsView.display(
     hourlyView,
     model.getPageHourly(--model.state.hourlyForecast.page)
@@ -48,7 +47,6 @@ const controlClickArrowLeft = function () {
 };
 
 const controlClickArrowRight = function () {
-  hourlyView.clear();
   forecastsView.display(
     hourlyView,
     model.getPageHourly(++model.state.hourlyForecast.page)
@@ -58,12 +56,12 @@ const controlClickArrowRight = function () {
 };
 
 const controlClickDot = function (index) {
-  hourlyView.clear();
   forecastsView.display(hourlyView, model.getPageHourly(index + 1));
 };
 
 const init = async function () {
   try {
+    [temperatureView, hourlyView, dailyView].forEach(el => el.renderSpinner());
     await model.loadLocation();
     controlSearch(model.state.curPosition, true);
     searchAndChangeTypeView.addHandlerSubmit(controlSearch);

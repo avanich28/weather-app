@@ -12,7 +12,13 @@ class ForeCastsView extends View {
 
   // Bundles all items before render
   _generateMarkUp() {
-    return this._data.map(data => this._curObj.render(data, false)).join('');
+    if (typeof this._data === 'number')
+      return new Array(this._data)
+        .fill(0)
+        .map(() => this._curObj.render(true, false))
+        .join('');
+    else
+      return this._data.map(data => this._curObj.render(data, false)).join('');
   }
 }
 

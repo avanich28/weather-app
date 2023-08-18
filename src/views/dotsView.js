@@ -3,6 +3,7 @@ import View from './View.js';
 class DotsView extends View {
   _parentElement = document.querySelector('.dots');
   _curDot = 0;
+  _index = 0;
 
   addHandlerClick(handler) {
     this._parentElement.addEventListener('click', e => {
@@ -24,8 +25,9 @@ class DotsView extends View {
     this._activeDot(allDots[page - 1]);
   }
 
-  resetDot() {
+  reset() {
     this._curDot = 0;
+    this._index = 0;
   }
 
   _activeDot(el) {
@@ -37,11 +39,12 @@ class DotsView extends View {
 
   _generateMarkUp() {
     // Sets initial active dot
-    const index = this._parentElement.children.length;
+    const i = this._index;
+    this._index++;
     return `
       <button><i class="bi bi-dot ${
-        index === 0 ? 'active-dot' : ''
-      }" data-index="${index}"></i></button>`;
+        i === 0 ? 'active-dot' : ''
+      }" data-index="${i}"></i></button>`;
   }
 }
 

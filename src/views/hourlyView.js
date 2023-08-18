@@ -23,10 +23,6 @@ class HourlyView extends View {
     });
   }
 
-  // _generateMarkUp() {
-  //   return this._data.map(data => this.render_generateMarkUpItem(data)).join('');
-  // }
-
   _generateMarkUp() {
     return `
       <li class="hourly-item">

@@ -11,6 +11,7 @@ export default class View {
     const markup = this._generateMarkUp();
     if (!render) return markup;
 
+    this._clear();
     this._parentElement.insertAdjacentHTML('beforeend', markup);
   }
 
@@ -46,13 +47,23 @@ export default class View {
     });
   }
 
-  clear() {
+  renderSpinner() {
+    this._clear();
+    const markup = `
+      <iframe class="spinner"
+        src="${this._findImage(false, 'spinner')}"
+        frameborder="0"
+      ></iframe>`;
+    this._parentElement.insertAdjacentHTML('beforeend', markup);
+  }
+
+  _clear() {
     this._parentElement.innerHTML = '';
   }
 
-  _findImage(iframe = true, str) {
+  _findImage(weather = true, str) {
     return this._images.find(img =>
-      img.includes(iframe ? `${this._data.code}_${this._data.isDay}` : str)
+      img.includes(weather ? `${this._data.code}_${this._data.isDay}` : str)
     );
   }
 }

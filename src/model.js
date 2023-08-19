@@ -2,7 +2,6 @@ import { RES_PER_PAGE } from './config.js';
 import { getJSON, calcFahrenheit, calcCelsius } from './helpers.js';
 
 export const state = {
-  curPosition: '',
   search: {
     query: '',
     curWeather: {},
@@ -123,15 +122,19 @@ const storeDailyForecast = function (data) {
   });
 };
 
+const setObj = function (data) {
+  state.search.curWeather = createCurWeatherObj(data);
+  storeHourlyForecast(data);
+  storeDailyForecast(data);
+};
+
 export const loadCurWeather = async function () {
   try {
     const data = await getJSON(
       `http://api.weatherapi.com/v1/forecast.json?key=0339d3d557a3447590e140611231208&q=${state.search.query}&days=3`
     );
 
-    state.search.curWeather = createCurWeatherObj(data);
-    storeHourlyForecast(data);
-    storeDailyForecast(data);
+    setObj(data);
 
     state.hourlyForecast.page = 1;
   } catch (err) {
@@ -162,7 +165,7 @@ const getPosition = function () {
   });
 };
 
-export const loadLocation = async function () {
+export const loadLocationWeather = async function () {
   try {
     const position = await getPosition();
     const { latitude, longitude } = position.coords;
@@ -170,11 +173,10 @@ export const loadLocation = async function () {
     console.log(`https://www.google.co.th/maps/@${latitude},${longitude}`); // FIXME
 
     const data = await getJSON(
-      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`
+      `http://api.weatherapi.com/v1/forecast.json?key=0339d3d557a3447590e140611231208&q=${latitude},${longitude}&days=3`
     );
 
-    state.curPosition = data.locality;
-    return data;
+    setObj(data);
   } catch (err) {
     console.log(err);
   }

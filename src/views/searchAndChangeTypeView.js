@@ -24,8 +24,8 @@ class SearchAndChangeTypeView extends View {
   addHandlerClick(handler) {
     this._tempTypeBtn.addEventListener('click', () => {
       this._allCharTypes.forEach(el => el.classList.toggle('active-type'));
+
       this._type = this._type === 0 ? 1 : 0;
-      console.log(this._type);
       handler(this._type);
     });
   }

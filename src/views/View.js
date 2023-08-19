@@ -62,8 +62,8 @@ export default class View {
   }
 
   _findImage(weather = true, str) {
-    return this._images.find(img =>
-      img.includes(weather ? `${this._data.code}_${this._data.isDay}` : str)
-    );
+    const keyWord = weather ? `${this._data.code}_${this._data.isDay}` : str;
+
+    return this._images.find(img => img.includes(keyWord));
   }
 }

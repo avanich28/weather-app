@@ -9,24 +9,24 @@ import dotsView from './views/dotsView.js';
 import forecastsView from './views/forecastsView.js';
 
 const controlSearch = async function (query, firstLoad = false) {
-  // Loading
-  if (!firstLoad) [hourlyView, dailyView].forEach(el => el.renderSpinner());
+  if (!firstLoad) {
+    // Loading
+    [hourlyView, dailyView].forEach(el => el.renderSpinner());
 
-  // Store query
-  model.state.search.query = query;
+    // Store query
+    model.state.search.query = query;
 
-  // Call API
-  await model.loadCurWeather();
+    // Call API
+    await model.loadCurWeather();
 
-  // Update today weather detail
-  if (firstLoad)
-    [temperatureView, otherDetailsView].forEach(view =>
-      view.render(model.state.search.curWeather)
-    );
-  else
+    // Update today weather detail
     [temperatureView, otherDetailsView].forEach(view =>
       view.update(model.state.search.curWeather)
     );
+
+    // Reset dot to first position
+    dotsView.reset();
+  }
 
   // Render hourly/daily forecast & don't need index
   forecastsView.display(hourlyView, model.getPageHourly());
@@ -34,7 +34,6 @@ const controlSearch = async function (query, firstLoad = false) {
 
   // Render hourly dots & need index
   forecastsView.display(dotsView, model.calcAllHourlyPages());
-  dotsView.reset();
 };
 
 const controlClickArrowLeft = function () {
@@ -82,8 +81,11 @@ const init = async function () {
     [temperatureView, hourlyView, dailyView].forEach(el => el.renderSpinner());
 
     // Initial location
-    await model.loadLocation();
-    await controlSearch(model.state.curPosition, true);
+    await model.loadLocationWeather();
+    [temperatureView, otherDetailsView].forEach(view =>
+      view.render(model.state.search.curWeather)
+    );
+    await controlSearch(null, true);
 
     searchAndChangeTypeView.addHandlerSubmit(controlSearch);
     searchAndChangeTypeView.addHandlerClick(controlClickTempTypeBtn);

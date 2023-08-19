@@ -4,8 +4,10 @@ class SearchAndChangeTypeView extends View {
   // _parentEl = document.querySelector('.search-location');
   _form = document.querySelector('.location-form');
   _tempTypeBtn = document.querySelector('.temperature-type-btn');
+  _allCharTypes = this._tempTypeBtn.querySelectorAll('span');
   _errEl = document.querySelector('.error');
   _errMsg = 'This location is not found.';
+  _type = 0;
 
   addHandlerSubmit(handler) {
     this._form.addEventListener('submit', e => {
@@ -19,10 +21,12 @@ class SearchAndChangeTypeView extends View {
     });
   }
 
-  // FIXME
   addHandlerClick(handler) {
     this._tempTypeBtn.addEventListener('click', () => {
-      handler();
+      this._allCharTypes.forEach(el => el.classList.toggle('active-type'));
+      this._type = this._type === 0 ? 1 : 0;
+      console.log(this._type);
+      handler(this._type);
     });
   }
 

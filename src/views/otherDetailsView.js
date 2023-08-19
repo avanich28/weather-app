@@ -32,7 +32,7 @@ class OtherDetailsView extends View {
           alt="thermometer"
         />
         <div>
-          <p>${this._data.feelsLike}&deg;C</p>
+          <p>${this._data.feelsLike}&deg;${this._data.tempType}</p>
           <p>Feels Like</p>
         </div>
       </div>`;

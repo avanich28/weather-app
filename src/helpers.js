@@ -28,3 +28,11 @@ export const getJSON = async function (url) {
     throw err;
   }
 };
+
+export const calcFahrenheit = function (celTemp) {
+  return (+celTemp * 1.8 + 32).toFixed(1);
+};
+
+export const calcCelsius = function (fahTemp) {
+  return ((+fahTemp - 32) * 0.5556).toFixed(1);
+};

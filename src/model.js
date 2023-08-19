@@ -1,5 +1,5 @@
 import { RES_PER_PAGE } from './config.js';
-import { getJSON } from './helpers.js';
+import { getJSON, calcFahrenheit, calcCelsius } from './helpers.js';
 
 export const state = {
   curPosition: '',
@@ -36,6 +36,15 @@ const getHourNum = function (date) {
   return new Date(date).getHours();
 };
 
+const getTempSymbol = function () {
+  return state.type === 0 ? 'C' : 'F';
+};
+
+const getTemp = function (temp) {
+  if (state.type === 0) return temp;
+  else return calcFahrenheit(temp);
+};
+
 const createCurWeatherObj = function (data) {
   const { current, forecast, location } = data;
   const forecastDay = forecast.forecastday[0];
@@ -46,15 +55,16 @@ const createCurWeatherObj = function (data) {
     localTime: convertDateAndTime(new Date(location.localtime)),
     code: current.condition.code,
     isDay: current.is_day,
-    temp: current.temp_c,
+    temp: getTemp(current.temp_c),
     description: current.condition.text,
-    maxTemp: forecastDay.day.maxtemp_c,
-    minTemp: forecastDay.day.mintemp_c,
+    maxTemp: getTemp(forecastDay.day.maxtemp_c),
+    minTemp: getTemp(forecastDay.day.mintemp_c),
     humidity: current.humidity,
     windSpeed: current.wind_kph,
     chanceOfRain:
       forecastDay.hour[getHourNum(location.localtime)].chance_of_rain,
-    feelsLike: current.feelslike_c,
+    feelsLike: getTemp(current.feelslike_c),
+    tempType: getTempSymbol(),
   };
 };
 
@@ -62,9 +72,10 @@ const createHourlyObj = function (hourData, curHour) {
   const hourNum = getHourNum(hourData.time);
   return {
     hour: hourNum === curHour ? 'Now' : hourNum,
-    temp: hourData.temp_c,
+    temp: getTemp(hourData.temp_c),
     code: hourData.condition.code,
     isDay: hourData.is_day,
+    tempType: getTempSymbol(),
   };
 };
 
@@ -73,9 +84,10 @@ const createDailyObj = function (dayData) {
     day: convertDateAndTime(new Date(dayData.date))
       .split(' ')[0]
       .replace(',', ''),
-    temp: dayData.day.avgtemp_c,
+    temp: getTemp(dayData.day.avgtemp_c),
     code: dayData.day.condition.code,
     isDay: 1,
+    tempType: getTempSymbol(),
   };
 };
 
@@ -158,12 +170,32 @@ export const loadLocation = async function () {
     console.log(`https://www.google.co.th/maps/@${latitude},${longitude}`); // FIXME
 
     const data = await getJSON(
-      `https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=119992969915497e15787373x101695`
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`
     );
 
-    state.curPosition = data.city;
+    state.curPosition = data.locality;
     return data;
   } catch (err) {
     console.log(err);
   }
+};
+
+export const convertTemp = function (type) {
+  state.type = type;
+  const calcTemp = type === 0 ? calcCelsius : calcFahrenheit;
+
+  // Today
+  const { curWeather } = state.search;
+
+  const allProps = ['temp', 'maxTemp', 'minTemp', 'feelsLike'];
+  allProps.forEach(prop => (curWeather[prop] = calcTemp(curWeather[prop])));
+  curWeather.tempType = getTempSymbol();
+
+  // Hourly & Daily
+  [state.hourlyForecast, state.dailyForecast].forEach(obj => {
+    obj.results.forEach(data => {
+      data.temp = calcTemp(data.temp);
+      data.tempType = getTempSymbol();
+    });
+  });
 };

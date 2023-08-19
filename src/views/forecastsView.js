@@ -4,10 +4,11 @@ class ForeCastsView extends View {
   _curObj;
   _parentElement;
 
-  display(obj, data) {
+  display(obj, data, update = false) {
     this._curObj = obj;
     this._parentElement = obj._parentElement;
-    this.render(data);
+    if (update) this.update(data);
+    else this.render(data);
   }
 
   // Bundles all items before render

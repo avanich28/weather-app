@@ -538,7 +538,7 @@ p.bold {
 li,
 .temperature-detail > *,
 .other-details > * {
-  animation: showUp 2s forwards;
+  animation: showUp 3s forwards;
 }
 
 img {

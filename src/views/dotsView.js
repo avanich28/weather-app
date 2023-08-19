@@ -22,12 +22,11 @@ class DotsView extends View {
   switchDot(page) {
     this._curDot = page - 1;
     const allDots = this._parentElement.querySelectorAll('.bi-dot');
-    this._activeDot(allDots[page - 1]);
+    this._activeDot(allDots[this._curDot]);
   }
 
   reset() {
-    this._curDot = 0;
-    this._index = 0;
+    this._curDot = this._index = 0;
   }
 
   _activeDot(el) {

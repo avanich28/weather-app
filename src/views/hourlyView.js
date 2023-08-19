@@ -35,7 +35,7 @@ class HourlyView extends View {
             frameborder="0"
           ></iframe>
         </div>
-        <p>${this._data.temp}&deg;C</p>
+        <p>${this._data.temp}&deg;${this._data.tempType}</p>
       </li>`;
   }
 }

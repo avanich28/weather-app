@@ -28,7 +28,7 @@ const controlSearch = async function (query, firstLoad = false) {
       view.update(model.state.search.curWeather)
     );
 
-  // Render hourly & daily forecast & don't need index
+  // Render hourly/daily forecast & don't need index
   forecastsView.display(hourlyView, model.getPageHourly());
   forecastsView.display(dailyView, model.state.dailyForecast.results);
 
@@ -59,12 +59,34 @@ const controlClickDot = function (index) {
   forecastsView.display(hourlyView, model.getPageHourly(index + 1));
 };
 
+const controlClickTempTypeBtn = function (type) {
+  // Calculate temp
+  model.convertTemp(type);
+
+  // Update
+  [temperatureView, otherDetailsView].forEach(view =>
+    view.update(model.state.search.curWeather)
+  );
+
+  [hourlyView, dailyView].forEach((view, i) => {
+    const data =
+      i === 0
+        ? model.getPageHourly(model.state.hourlyForecast.page)
+        : model.state.dailyForecast.results;
+    forecastsView.display(view, data, true);
+  });
+};
+
 const init = async function () {
   try {
     [temperatureView, hourlyView, dailyView].forEach(el => el.renderSpinner());
+
+    // Initial location
     await model.loadLocation();
-    controlSearch(model.state.curPosition, true);
+    await controlSearch(model.state.curPosition, true);
+
     searchAndChangeTypeView.addHandlerSubmit(controlSearch);
+    searchAndChangeTypeView.addHandlerClick(controlClickTempTypeBtn);
     hourlyView.addHandlerClickArrowLeft(controlClickArrowLeft);
     hourlyView.addHandlerClickArrowRight(controlClickArrowRight);
     dotsView.addHandlerClick(controlClickDot);

@@ -1,22 +1,25 @@
 import View from './View.js';
 
 class SearchAndChangeTypeView extends View {
-  // _parentEl = document.querySelector('.search-location');
   _form = document.querySelector('.location-form');
   _tempTypeBtn = document.querySelector('.temperature-type-btn');
   _allCharTypes = this._tempTypeBtn.querySelectorAll('span');
   _errEl = document.querySelector('.error');
-  _errMsg = 'This location is not found.';
   _type = 0;
+  _allBtns = [this._tempTypeBtn];
 
   addHandlerSubmit(handler) {
     this._form.addEventListener('submit', e => {
       e.preventDefault();
       this._clearErrorMsg();
+
       const dataEntries = [...new FormData(this._form)];
+
       const query = Object.fromEntries(dataEntries).location;
       if (!query) return;
+
       this._clearInput();
+
       handler(query);
     });
   }
@@ -30,9 +33,9 @@ class SearchAndChangeTypeView extends View {
     });
   }
 
-  renderErrorMsg() {
-    this._errEl.textContent = this._errMsg;
-  } // FIXME
+  renderErrorMsg(err) {
+    this._errEl.textContent = err;
+  }
 
   _clearErrorMsg() {
     this._errEl.textContent = '';

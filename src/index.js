@@ -8,32 +8,54 @@ import dailyView from './views/dailyView.js';
 import dotsView from './views/dotsView.js';
 import forecastsView from './views/forecastsView.js';
 
-const controlSearch = async function (query, firstLoad = false) {
-  if (!firstLoad) {
-    // Loading
-    [hourlyView, dailyView].forEach(el => el.renderSpinner());
+const controlSearch = async function (
+  query,
+  firstLoad = false,
+  getLocation = true
+) {
+  try {
+    [hourlyView, dotsView].forEach(view => view.hideBtns());
 
-    // Store query
-    model.state.search.query = query;
+    if (!firstLoad || (firstLoad && !getLocation)) {
+      // Loading
+      [hourlyView, dailyView].forEach(el => el.renderSpinner());
 
-    // Call API
-    await model.loadCurWeather();
+      // Store query
+      model.state.search.query = query;
 
-    // Update today weather detail
-    [temperatureView, otherDetailsView].forEach(view =>
-      view.update(model.state.search.curWeather)
+      // Call API
+      await model.loadCurWeather();
+    }
+
+    if (!firstLoad) {
+      // Update today weather detail
+      [temperatureView, otherDetailsView].forEach(view =>
+        view.update(model.state.search.curWeather)
+      );
+
+      // Reset dot to first position
+      dotsView.reset();
+    } else if (firstLoad)
+      [temperatureView, otherDetailsView].forEach(view =>
+        view.render(model.state.search.curWeather)
+      );
+
+    // Render hourly/daily forecast & don't need index
+    forecastsView.display(hourlyView, model.getPageHourly());
+    forecastsView.display(dailyView, model.state.dailyForecast.results);
+
+    [searchAndChangeTypeView, hourlyView, dotsView].forEach(view =>
+      view.unhideBtns()
     );
 
-    // Reset dot to first position
-    dotsView.reset();
+    // Render hourly dots & need index
+    forecastsView.display(dotsView, model.calcAllHourlyPages());
+  } catch (err) {
+    searchAndChangeTypeView.hideBtns();
+    [searchAndChangeTypeView, hourlyView, dailyView].forEach(view =>
+      view.renderErrorMsg(err.message)
+    );
   }
-
-  // Render hourly/daily forecast & don't need index
-  forecastsView.display(hourlyView, model.getPageHourly());
-  forecastsView.display(dailyView, model.state.dailyForecast.results);
-
-  // Render hourly dots & need index
-  forecastsView.display(dotsView, model.calcAllHourlyPages());
 };
 
 const controlClickArrowLeft = function () {
@@ -76,24 +98,28 @@ const controlClickTempTypeBtn = function (type) {
   });
 };
 
-const init = async function () {
+const controlLoadLocationWeather = async function () {
   try {
     [temperatureView, hourlyView, dailyView].forEach(el => el.renderSpinner());
 
     // Initial location
     await model.loadLocationWeather();
-    [temperatureView, otherDetailsView].forEach(view =>
-      view.render(model.state.search.curWeather)
-    );
-    await controlSearch(null, true);
 
-    searchAndChangeTypeView.addHandlerSubmit(controlSearch);
-    searchAndChangeTypeView.addHandlerClick(controlClickTempTypeBtn);
-    hourlyView.addHandlerClickArrowLeft(controlClickArrowLeft);
-    hourlyView.addHandlerClickArrowRight(controlClickArrowRight);
-    dotsView.addHandlerClick(controlClickDot);
+    await controlSearch(null, true);
   } catch (err) {
-    console.log(err);
+    if (err) await controlSearch('thailand', true, false);
+    alert(
+      'Please allow the site to access to your location within browser settings in order to check the current weather at your position \n\n After the site is allowed, please reopen it again :D'
+    );
   }
+};
+
+const init = function () {
+  controlLoadLocationWeather();
+  searchAndChangeTypeView.addHandlerSubmit(controlSearch);
+  searchAndChangeTypeView.addHandlerClick(controlClickTempTypeBtn);
+  hourlyView.addHandlerClickArrowLeft(controlClickArrowLeft);
+  hourlyView.addHandlerClickArrowRight(controlClickArrowRight);
+  dotsView.addHandlerClick(controlClickDot);
 };
 init();

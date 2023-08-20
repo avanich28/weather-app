@@ -18,13 +18,16 @@ export const getJSON = async function (url) {
     const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
     // console.log(res);
 
-    if (!res.ok) throw new Error(`${data.message} ${res.status}`);
-
     const data = await res.json();
     // console.log(data);
+
+    if (!res.ok) throw new Error(`${data.error.message}`);
+    // or res.status
+    // throw new Error('Hello World');
     return data;
   } catch (err) {
-    console.log(err);
+    // if (err) console.log('🔥');
+    // console.error(err);
     throw err;
   }
 };

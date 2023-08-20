@@ -4,6 +4,9 @@ class HourlyView extends View {
   _parentElement = document.querySelector('.weather-hourly-list');
   _arrowBtnLeft = document.querySelector('.arrow-btn-left');
   _arrowBtnRight = document.querySelector('.arrow-btn-right');
+  _allBtns = document
+    .querySelector('.hourly-container')
+    .querySelectorAll('button');
 
   addHandlerClickArrowLeft(handler) {
     this._arrowBtnLeft.addEventListener('click', e => {

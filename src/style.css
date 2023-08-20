@@ -146,7 +146,7 @@ table {
   --font-color-light: white;
   --background-color-forecast-container: rgba(63, 74, 78, 0.417);
   --color-dot: rgb(52, 224, 230);
-  --color-active: orangered;
+  --color-active: rgb(33, 232, 33);
   --color-error: red;
 }
 
@@ -332,6 +332,10 @@ input[type='text']:focus + .search-btn {
   transform: scale(1);
 }
 
+/* .temperature-type-btn {
+  animation: moveRight 2s forwards;
+} */
+
 .active-type {
   color: var(--color-active);
   font-weight: bold;
@@ -462,8 +466,9 @@ input[type='text']:focus + .search-btn {
   height: 24px;
 }
 
-.weather-hourly-list .spinner {
-  margin-left: 47%;
+.weather-hourly-list .spinner,
+.weather-hourly-list .forecast-box-error {
+  margin: 0 auto;
 }
 
 .hourly-item,
@@ -535,14 +540,24 @@ p.bold {
   color: var(--color-hover-github);
 }
 
+/* Don't know why temperature-type-btn animation works */
 li,
 .temperature-detail > *,
-.other-details > * {
+.other-details > *,
+.arrow-btn-left,
+.arrow-btn-right,
+.dots > button,
+.temperature-type-btn {
   animation: showUp 3s forwards;
 }
 
 img {
   animation: moveDown 4s forwards;
+}
+
+.hide {
+  visibility: hidden;
+  animation: none;
 }
 
 @media only screen and (max-width: 600px) {

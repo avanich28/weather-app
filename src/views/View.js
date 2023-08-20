@@ -57,6 +57,21 @@ export default class View {
     this._parentElement.insertAdjacentHTML('beforeend', markup);
   }
 
+  renderErrorMsg(err) {
+    this._clear();
+    const markup = `
+      <div class="forecast-box-error">${err}</div>`;
+    this._parentElement.insertAdjacentHTML('beforeend', markup);
+  }
+
+  hideBtns() {
+    this._allBtns.forEach(btn => btn.classList.add('hide'));
+  }
+
+  unhideBtns() {
+    this._allBtns.forEach(btn => btn.classList.remove('hide'));
+  }
+
   _clear() {
     this._parentElement.innerHTML = '';
   }

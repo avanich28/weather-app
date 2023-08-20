@@ -1,4 +1,4 @@
-import { RES_PER_PAGE } from './config.js';
+import { RES_PER_PAGE, API_URL } from './config.js';
 import { getJSON, calcFahrenheit, calcCelsius } from './helpers.js';
 
 export const state = {
@@ -130,12 +130,9 @@ const setObj = function (data) {
 
 export const loadCurWeather = async function () {
   try {
-    const data = await getJSON(
-      `http://api.weatherapi.com/v1/forecast.json?key=0339d3d557a3447590e140611231208&q=${state.search.query}&days=3`
-    );
+    const data = await getJSON(`${API_URL}${state.search.query}`);
 
     setObj(data);
-
     state.hourlyForecast.page = 1;
   } catch (err) {
     throw err;
@@ -170,15 +167,12 @@ export const loadLocationWeather = async function () {
     const position = await getPosition();
     const { latitude, longitude } = position.coords;
 
-    console.log(`https://www.google.co.th/maps/@${latitude},${longitude}`); // FIXME
-
-    const data = await getJSON(
-      `http://api.weatherapi.com/v1/forecast.json?key=0339d3d557a3447590e140611231208&q=${latitude},${longitude}&days=3`
-    );
+    const data = await getJSON(`${API_URL}${latitude},${longitude}`);
 
     setObj(data);
   } catch (err) {
-    console.log(err);
+    // console.error(err)
+    throw err;
   }
 };
 

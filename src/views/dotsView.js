@@ -4,6 +4,7 @@ class DotsView extends View {
   _parentElement = document.querySelector('.dots');
   _curDot = 0;
   _index = 0;
+  _allBtns = [this._parentElement];
 
   addHandlerClick(handler) {
     this._parentElement.addEventListener('click', e => {

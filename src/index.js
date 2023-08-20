@@ -107,7 +107,7 @@ const controlLoadLocationWeather = async function () {
 
     await controlSearch(null, true);
   } catch (err) {
-    if (err) await controlSearch('thailand', true, false);
+    await controlSearch('thailand', true, false);
     alert(
       'Please allow the site to access to your location within browser settings in order to check the current weather at your position \n\n After the site is allowed, please reopen it again :D'
     );

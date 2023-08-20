@@ -41,7 +41,7 @@ const getTempSymbol = function () {
 
 const getTemp = function (temp) {
   if (state.type === 0) return temp;
-  else return calcFahrenheit(temp);
+  return calcFahrenheit(temp);
 };
 
 const createCurWeatherObj = function (data) {
@@ -156,7 +156,7 @@ export const getPageHourly = function (page = 1) {
 };
 
 const getPosition = function () {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(resolve, reject);
   });
@@ -171,7 +171,6 @@ export const loadLocationWeather = async function () {
 
     setObj(data);
   } catch (err) {
-    // console.error(err)
     throw err;
   }
 };

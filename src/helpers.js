@@ -5,8 +5,8 @@ export const importAll = function (r) {
 };
 
 const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
       reject(new Error(`Timeout after ${s} second`));
     }, s * 1000);
   });
@@ -14,20 +14,14 @@ const timeout = function (s) {
 
 export const getJSON = async function (url) {
   try {
-    const fetchPro = fetch(url);
+    const fetchPro = fetch(url, { mode: 'cors' });
     const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
-    // console.log(res);
 
     const data = await res.json();
-    // console.log(data);
 
     if (!res.ok) throw new Error(`${data.error.message}`);
-    // or res.status
-    // throw new Error('Hello World');
     return data;
   } catch (err) {
-    // if (err) console.log('🔥');
-    // console.error(err);
     throw err;
   }
 };
